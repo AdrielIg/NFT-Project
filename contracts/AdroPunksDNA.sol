@@ -200,6 +200,20 @@ contract AdroPunksDNA {
         "ShortHairTheCaesar",
         "ShortHairTheCaesarSidePart"
     ];
+
+    //This pseudo randmon function is deterministic and should NOT be used in prod
+    function deterministicPseudoRandomDNA(uint256 _tokenId, address _minter)
+        public
+        pure
+        returns (uint256)
+    {
+        uint256 combineParams = _tokenId + uint160(_minter);
+        bytes memory encodeParams = abi.encodePacked(combineParams);
+        bytes32 hashedParams = keccak256(encodeParams);
+
+        return uint256(hashedParams);
+    }
+
     //Get attributes
     uint8 constant ADN_SECTION_SIZE = 2;
 
