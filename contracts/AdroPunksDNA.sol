@@ -229,7 +229,7 @@ contract AdroPunksDNA {
             );
     }
 
-    function _getAccesoriesType(uint256 _dna)
+    function getAccessoriesType(uint256 _dna)
         public
         view
         returns (string memory)
@@ -239,14 +239,9 @@ contract AdroPunksDNA {
         return _accessoriesType[dnaSection % _accessoriesType.length];
     }
 
-    function _getClotheColor(uint256 _dna) public view returns (string memory) {
+    function getClotheColor(uint256 _dna) public view returns (string memory) {
         uint8 dnaSection = _getDNASection(_dna, 2);
 
-        return _clotheColor[dnaSection % _clotheColor.length];
-    }
-
-    function getClotheColor(uint256 _dna) public view returns (string memory) {
-        uint256 dnaSection = _getDNASection(_dna, 2);
         return _clotheColor[dnaSection % _clotheColor.length];
     }
 
