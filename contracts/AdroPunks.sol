@@ -4,11 +4,13 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "./Base64.sol";
 import "./AdroPunksDNA.sol";
 
 contract AdroPunks is ERC721, ERC721Enumerable, AdroPunksDNA {
     using Counters for Counters.Counter;
+    using Strings for uint256;
 
     Counters.Counter private _idCounter;
     uint256 public maxSupply;
@@ -24,6 +26,7 @@ contract AdroPunks is ERC721, ERC721Enumerable, AdroPunksDNA {
 
         tokenDNA[current] = deterministicPseudoRandomDNA(current, msg.sender);
         _safeMint(msg.sender, current);
+        _idCounter.increment();
     }
 
     function _baseURI() internal pure override returns (string memory) {
@@ -93,7 +96,7 @@ contract AdroPunks is ERC721, ERC721Enumerable, AdroPunksDNA {
         string memory jsonURI = Base64.encode(
             abi.encodePacked(
                 '{ "name": "AdroPunks #',
-                _tokenId,
+                _tokenId.toString(),
                 '", "description": "Adro Punks are randomized Avataaars and the only purpose is to test and improve knowledge about Solidity and ERC721", "image": "',
                 image,
                 '"}'
